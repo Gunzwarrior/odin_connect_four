@@ -33,4 +33,15 @@ class Board
     BOARD
   end
 
+  def full?
+    @board.each { |subarray| return false if subarray.include?(' ') }
+    true
+  end
+
+  def space?(n)
+    return true if @board[n].include?(' ')
+    
+    false
+  end
+
 end

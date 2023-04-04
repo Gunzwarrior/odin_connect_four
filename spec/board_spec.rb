@@ -73,4 +73,58 @@ describe Board do
       end
     end
   end
+
+
+  describe '#full?' do
+    context 'when board is full' do
+      before do
+        board_state = Array.new()
+        7.times {board_state.push([])}
+        board_state.each do |element|
+          6.times { element.push('X') }
+        end
+        board_test.instance_variable_set(:@board, board_state)
+      end
+      it 'returns true' do
+        expect(board_test.full?).to be true
+      end
+    end
+    context 'when board is not full' do
+      before do
+        board_state = Array.new()
+        7.times {board_state.push([])}
+        board_state.each do |element|
+          6.times { element.push('X') }
+        end
+        board_state[0][1] = ' '
+        board_test.instance_variable_set(:@board, board_state)
+      end
+      it 'returns false' do
+        expect(board_test.full?).to be false
+      end
+    end
+  end
+
+  describe '#space?' do
+    before do
+      board_state = Array.new()
+      7.times {board_state.push([])}
+      board_state.each do |element|
+        6.times { element.push('X') }
+      end
+      board_state[0][1] = ' '
+      board_test.instance_variable_set(:@board, board_state)
+    end
+    context 'when there is space available' do
+      
+      it 'returns true' do
+        expect(board_test.space?(0)).to be true
+      end
+    end
+    context 'when there is no space available' do
+      it 'returns false' do
+        expect(board_test.space?(1)).to be false
+      end
+    end
+  end
 end
