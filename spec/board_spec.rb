@@ -116,14 +116,37 @@ describe Board do
       board_test.instance_variable_set(:@board, board_state)
     end
     context 'when there is space available' do
-      
       it 'returns true' do
-        expect(board_test.space?(0)).to be true
+        expect(board_test.space?(1)).to be true
       end
     end
     context 'when there is no space available' do
       it 'returns false' do
-        expect(board_test.space?(1)).to be false
+        expect(board_test.space?(2)).to be false
+      end
+    end
+  end
+
+  describe '#add_piece' do
+    before do
+      board_state = Array.new()
+      7.times {board_state.push([])}
+      board_state.each do |element|
+        6.times { element.push(' ') }
+      end
+      board_state[0][0] = 'red'
+      board_test.instance_variable_set(:@board, board_state)
+    end
+    context 'when adding on the first row' do
+      it 'changes the first subarray of board' do
+        expected_subarray = ['red', 'blue', ' ', ' ', ' ', ' ']
+        expect { board_test.add_piece(1, 'blue') }.to change {board_test.instance_variable_get(:@board)[0]}.to(expected_subarray)
+      end
+    end
+    context 'when adding on the first row' do
+      it 'changes the first subarray of board' do
+        expected_subarray = ['blue', ' ', ' ', ' ', ' ', ' ']
+        expect { board_test.add_piece(2, 'blue') }.to change {board_test.instance_variable_get(:@board)[1]}.to(expected_subarray)
       end
     end
   end

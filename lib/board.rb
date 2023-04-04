@@ -39,9 +39,14 @@ class Board
   end
 
   def space?(n)
-    return true if @board[n].include?(' ')
-    
+    return true if @board[n-1].include?(' ')
+
     false
+  end
+
+  def add_piece(row, color)
+    empty_space = @board[row-1].index(' ')
+    @board[row-1][empty_space] = color
   end
 
 end
