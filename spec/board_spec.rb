@@ -150,4 +150,91 @@ describe Board do
       end
     end
   end
+
+  describe '#transform_board' do
+    context 'when board is empty' do
+      before do
+        board_state = Array.new()
+        7.times {board_state.push([])}
+        board_state.each do |element|
+          6.times { element.push(' ') }
+        end
+        board_test.instance_variable_set(:@board, board_state)
+      end
+      it 'returns a new array of "empty subarrays"' do
+        expected_array = [
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ']
+        ]
+        expect(board_test.transform_board).to eq(expected_array)
+      end
+    end
+    context 'when board is not empty' do
+      before do
+        board_state2 = Array.new()
+        7.times {board_state2.push([])}
+        board_state2.each do |element|
+          6.times { element.push(' ') }
+        end
+        board_state2[0][3] = 'X'
+        board_state2[1][2] = 'X'
+        board_state2[2][1] = 'X'
+        board_state2[3][0] = 'X'
+        board_test.instance_variable_set(:@board, board_state2)
+      end
+      it 'returns a new array of subarrays' do
+        expected_array2 = [
+          [' ', ' ', ' ', 'X', ' ', ' '],
+          [' ', ' ', 'X', ' ', ' ', ' '],
+          [' ', 'X', ' ', ' ', ' ', ' '],
+          ['X', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', 'X', ' ', ' ', ' '],
+          [' ', ' ', 'X', ' ', ' ', ' ', ' '],
+          [' ', 'X', ' ', ' ', ' ', ' ', ' '],
+          ['X', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          ['X', 'X', 'X', 'X'],
+          [' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' '],
+          [' ', 'X', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', 'X', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' '],
+          ['X', ' ', ' ', ' ']
+        ]
+        expect(board_test.transform_board).to eq(expected_array2)
+      end
+    end
+  end
 end
