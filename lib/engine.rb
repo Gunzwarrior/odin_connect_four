@@ -13,4 +13,9 @@ class Engine
     @player2 = player2
     @board = board
   end
+
+  def valid_input?(input)
+    return true if input.match(/^[1-7]$/)
+    false
+  end
 end
