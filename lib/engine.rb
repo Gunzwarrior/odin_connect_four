@@ -25,4 +25,19 @@ class Engine
 
     false
   end
+
+  def game_over?
+    return true if board.full? || someone_won?
+
+    false
+  end
+
+  def someone_won?
+    
+    board.transform_board.each do |arr|
+      return true if arr.each_cons(4).any? { |subarr| subarr.uniq.length == 1 && subarr.uniq[0] != ' ' }
+    end
+    false
+  end
+
 end

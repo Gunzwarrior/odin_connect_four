@@ -83,4 +83,60 @@ describe Engine do
     end
   end
 
+  describe '#game_over?' do
+       
+    context 'when the board is full' do
+      it 'returns true' do
+        allow(board_test).to receive(:full?).and_return(true)
+        allow(engine_test).to receive(:someone_won?)
+        expect(engine_test.game_over?).to be true
+      end
+    end
+    context 'when someone won' do
+      it 'returns true' do
+        allow(board_test).to receive(:full?)
+        allow(engine_test).to receive(:someone_won?).and_return(true)
+        expect(engine_test.game_over?).to be true
+      end
+    end
+
+    context 'when board isn\'t full and nobody won' do
+      it 'returns false' do
+        allow(board_test).to receive(:full?).and_return(false)
+        allow(engine_test).to receive(:someone_won?).and_return(false)
+        expect(engine_test.game_over?).to be false
+      end
+    end
+  end
+
+  describe '#someone_won?' do
+
+    before do
+      board_state = Array.new()
+      7.times {board_state.push([])}
+      board_state.each do |element|
+        6.times { element.push(' ') }
+      end
+      board_state[0][3] = 'X'
+      board_state[1][2] = 'X'
+      board_state[2][1] = 'X'
+      board_state[3][0] = 'X'
+      board_test.instance_variable_set(:@board, board_state)
+    end
+
+
+    context 'when nobody won' do
+      it 'returns false' do
+        allow(board_test).to receive_message_chain(:transform_board, :each)
+        expect(engine_test.someone_won?).to be false
+      end
+    end
+    context 'when someone won' do
+      it 'returns true' do
+        allow(board_test).to receive_message_chain(:transform_board, :each)
+        expect(engine_test.someone_won?).to be true
+      end
+    end
+  end
+
 end
