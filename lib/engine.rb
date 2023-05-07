@@ -40,4 +40,36 @@ class Engine
     false
   end
 
+  def game_loop
+    loop do
+      player1_move = ""
+      until valid_move?(player1_move, board)
+        print "Player 1 > "
+        player1_move = player1.play
+      end
+      board.add_piece(player1_move.to_i, player1.color)
+      board.show_board
+      @last_played = player1
+      break if game_over?
+
+      player2_move = ""
+      until valid_move?(player2_move, board)
+        print "Player 2 > "
+        player2_move = player2.play
+      end
+      board.add_piece(player2_move.to_i, player2.color)
+      board.show_board
+      @last_played = player2
+      break if game_over?
+
+    end
+    if someone_won? && @last_played == player1
+      puts "Player 1 won"
+    elsif someone_won? && @last_played == player2
+      puts "Player 2 won"
+    else
+      puts "Draw"
+    end
+  end 
+
 end
