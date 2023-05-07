@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/engine'
+require_relative '../lib/board'
 
 describe Engine do
   subject(:engine_test) { described_class.new(player1_test,
@@ -25,9 +26,6 @@ describe Engine do
     end
   end
   describe '#valid_input?' do
-
-    before do
-    end
 
     context 'when the player inputs a number ranging from 1 to 7' do
       it 'returns true' do
@@ -58,4 +56,31 @@ describe Engine do
       end
     end
   end
+  
+  describe '#valid_move?' do
+
+    context 'when the input is invalid' do
+      it 'returns false' do
+        input = "j"
+        expect(engine_test.valid_move?(input, board_test)).to be false
+      end
+    end
+
+    context 'when the input is valid, and there is room left' do
+      it 'returns true' do
+        input = "2"
+        allow(board_test).to receive(:space?).and_return(true)
+        expect(engine_test.valid_move?(input, board_test)).to be true
+      end
+    end
+
+    context 'when the input is valid, and there is no room left' do
+      it 'returns false' do
+        input = "2"
+        allow(board_test).to receive(:space?).and_return(false)
+        expect(engine_test.valid_move?(input, board_test)).to be false
+      end
+    end
+  end
+
 end

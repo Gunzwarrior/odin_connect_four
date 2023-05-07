@@ -18,4 +18,11 @@ class Engine
     return true if input.match(/^[1-7]$/)
     false
   end
+
+  def valid_move?(input, board)
+
+    return true if valid_input?(input) && board.space?(input.to_i)
+
+    false
+  end
 end
